@@ -1,0 +1,80 @@
+FlexiMart Data Quality Report
+==============================
+ETL executed.
+Database: Fleximart
+
+--------------------------------------
+1. Customers Data (customers_raw.csv)
+--------------------------------------
+
+Total records extracted: 25
+
+Data Quality Issues Identified:
+- Duplicate records: 1 (customer_id C001)
+- Missing email values: 5 records
+- Inconsistent phone number formats (+91 prefix, leading zeros, dashes)
+- Inconsistent registration date formats (YYYY-MM-DD, DD/MM/YYYY, MM-DD-YYYY)
+- Inconsistent city name casing
+
+Transformations Applied:
+- Removed duplicate customer records based on customer_id
+- Dropped records with missing mandatory email field
+- Standardized phone numbers to format: +91-XXXXXXXXXX
+- Converted all registration dates to YYYY-MM-DD format
+- Standardized city names to proper case
+
+Records after cleaning: 20
+Records successfully loaded into customers table: 20
+
+--------------------------------------
+2. Products Data (products_raw.csv)
+--------------------------------------
+
+Total records extracted: 20
+
+Data Quality Issues Identified:
+- Missing price values: 3 records (P003, P010, P017)
+- Missing stock quantity: 1 record (P006)
+- Inconsistent category names (Electronics, ELECTRONICS, electronics, Fashion, fashion)
+- Extra spaces in product names
+
+Transformations Applied:
+- Removed records with missing mandatory price field
+- Replaced missing stock quantity with default value 0
+- Standardized category names (Electronics, Fashion, Groceries)
+- Trimmed extra spaces from product names
+
+Records after cleaning: 17
+Records successfully loaded into products table: 17
+
+--------------------------------------
+3. Sales Data (sales_raw.csv)
+--------------------------------------
+
+Total records extracted: 40
+
+Data Quality Issues Identified:
+- Duplicate transaction records: 1 (transaction_id T001)
+- Missing customer_id values: 3 records
+- Missing product_id values: 2 records
+- Inconsistent transaction date formats (YYYY-MM-DD, DD/MM/YYYY, MM-DD-YYYY)
+
+Transformations Applied:
+- Removed duplicate transactions based on transaction_id
+- Dropped records with missing customer_id or product_id
+- Converted all transaction dates to YYYY-MM-DD format
+- Validated quantity and unit price fields
+
+Records after cleaning: 34
+Records successfully loaded into orders and order_items tables: 34
+
+--------------------------------------
+ETL Summary
+--------------------------------------
+
+Total records processed: 85
+Total duplicate records removed: 2
+Total records dropped due to missing mandatory values: 11
+Total records successfully loaded into database: 71
+
+ETL pipeline completed successfully with all data quality issues handled.
